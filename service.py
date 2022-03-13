@@ -55,7 +55,7 @@ def getMarketplaceItemDetail(tokenId) -> Dict:
             return {"message": "Data not found"}
     except:
         return {}
-        
+
 def getOwnerOfNFT(tokenId) -> string:
     try:
         return nft_contract.functions.ownerOf(int(tokenId)).call()
@@ -67,5 +67,17 @@ def getItemOffer(tokenAddress, tokenId, buyer):
         pattern = ["currency","price"]
         itemOffer = marketplace_contract.functions.itemOffers(tokenAddress, int(tokenId), buyer).call()
         return mappingArray2Dict(itemOffer, pattern)
+    except:
+        return {}
+def getNFTGameInfo(tokenId):
+    try:
+        pattern = ["owner", "claimable"]
+        result = game_contract.functions.NftInfo(int(tokenId)).call()
+        return mappingArray2Dict(result, pattern)
+    except:
+        return {}
+def getTokenGameInfo(address):
+    try:
+        return game_contract.functions.TokenInfo(address).call()
     except:
         return {}

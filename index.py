@@ -4,7 +4,7 @@ from telegram import ParseMode, Update, File
 from telegram.ext import Updater, MessageHandler, CallbackContext, Filters, CommandHandler
 from dotenv import load_dotenv
 import os
-from service import getItemOffer, getMarketplaceItemDetail, getOwnerOfNFT
+from service import getItemOffer, getMarketplaceItemDetail, getOwnerOfNFT, getNFTGameInfo, getTokenGameInfo
 config = load_dotenv()
 
 logger = logging.getLogger(__name__)
@@ -27,6 +27,15 @@ def handleGetMarketplaceDetail(update: Update, context: CallbackContext) -> None
 def handleGetOwnerOfNFT(update: Update, context: CallbackContext) -> None:
     result = getOwnerOfNFT(context.args[0])
     update.message.reply_text(result)
+
+def handleGetTokenGameInfo(update: Update, context: CallbackContext) -> None:
+    result = getTokenGameInfo(context.args[0])
+    update.message.reply_text(result)
+    
+def handleGetNFTGameInfo(update: Update, context: CallbackContext) -> None:
+    result = getNFTGameInfo(context.args[0])
+    update.message.reply_text(result)
+
 def handleHelp(update: Update, context: CallbackContext) -> None:
     
     # <b>/offer:</b><code>&lt;token_id&gt; &lt;buyer&gt;: get item offer</code>\n
@@ -34,7 +43,7 @@ def handleHelp(update: Update, context: CallbackContext) -> None:
     # <b>/owner:</b><pre>&lt;token_id&gt; &lt;buyer&gt;: get owner</pre>\n
     
     update.message.reply_text(
-  '''/offer <tokenId> <buyer> - Get item offer \n/market <tokenId> - Get marketplace detail \n/owner <tokenId> - Get owner \n'''
+  '''/offer <tokenId> <buyer> - Get item offer \n/market <tokenId> - Get marketplace detail \n/owner <tokenId> - Get owner \n/tokengame <address> - Get token of game\n/nftgame <tokenId> - Get nft of game\n'''
     )
 def main() -> None: 
     print('TELEBOT STARTED')
@@ -48,6 +57,8 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("offer",handleGetItemOffer))
     dispatcher.add_handler(CommandHandler("market",handleGetMarketplaceDetail))
     dispatcher.add_handler(CommandHandler("owner",handleGetOwnerOfNFT))
+    dispatcher.add_handler(CommandHandler("tokengame",handleGetTokenGameInfo))
+    dispatcher.add_handler(CommandHandler("nftgame",handleGetNFTGameInfo))
     # Start the Bot
     updater.start_polling()
 
