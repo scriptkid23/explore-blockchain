@@ -37,31 +37,35 @@ def mappingArray2Dict(array:list, pattern: list) -> Dict:
     return obj
 
 def getMarketplaceItemDetail(tokenId) -> Dict:
-    # http://23.22.198.29:8080/api/v1/market/32
-    r = requests.get('http://23.22.198.29:8080/api/v1/market/'+tokenId)
+    try:
+        r = requests.get('http://23.22.198.29:8080/api/v1/market/'+tokenId)
 
-    if r.status_code == 200:
-        data = r.json()
-        print(bool(data))
-        if(not bool(data)):
-            return json.dumps({"message": "NFT was unlisted"}, indent=4, sort_keys=True)
+        if r.status_code == 200:
+            data = r.json()
+            if(not bool(data)):
+                return json.dumps({"message": "NFT was unlisted"}, indent=4, sort_keys=True)
 
-        if(data['market_item_id'] != -1):
-            pattern = ["tokenId", "endTime","reservePrice","price","tokenAddress","tokenOwner","bidder","currency","marketItemType"]
-            marketplaceDetail = marketplace_contract.functions.marketPlaceItems(int(data['market_item_id'])).call()
-            return json.dumps(mappingArray2Dict(marketplaceDetail, pattern),indent=4, sort_keys=True)
+            if(data['market_item_id'] != -1):
+                pattern = ["tokenId", "endTime","reservePrice","price","tokenAddress","tokenOwner","bidder","currency","marketItemType"]
+                marketplaceDetail = marketplace_contract.functions.marketPlaceItems(int(data['market_item_id'])).call()
+                return json.dumps(mappingArray2Dict(marketplaceDetail, pattern),indent=4, sort_keys=True)
+            else:
+                return {"message": "NFT was unlisted"}
         else:
-            return {"message": "NFT was unlisted"}
-    else:
-        return {"message": "Data not found"}
-
-   
-
+            return {"message": "Data not found"}
+    except:
+        return {}
+        
 def getOwnerOfNFT(tokenId) -> string:
-    return nft_contract.functions.ownerOf(int(tokenId)).call()
+    try:
+        return nft_contract.functions.ownerOf(int(tokenId)).call()
+    except:
+        return {}
 
 def getItemOffer(tokenAddress, tokenId, buyer):
-    print(tokenAddress, tokenId, buyer)
-    pattern = ["currency","price"]
-    itemOffer = marketplace_contract.functions.itemOffers(tokenAddress, int(tokenId), buyer).call()
-    return mappingArray2Dict(itemOffer, pattern)
+    try:  
+        pattern = ["currency","price"]
+        itemOffer = marketplace_contract.functions.itemOffers(tokenAddress, int(tokenId), buyer).call()
+        return mappingArray2Dict(itemOffer, pattern)
+    except:
+        return {}

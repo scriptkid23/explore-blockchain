@@ -1,11 +1,10 @@
 from email import message
 import logging
-from telegram import Update, File
+from telegram import ParseMode, Update, File
 from telegram.ext import Updater, MessageHandler, CallbackContext, Filters, CommandHandler
 from dotenv import load_dotenv
 import os
 from service import getItemOffer, getMarketplaceItemDetail, getOwnerOfNFT
-ZERO_ADDRESS = "0x0000000000000000000000000000000000000000"
 config = load_dotenv()
 
 logger = logging.getLogger(__name__)
@@ -18,7 +17,7 @@ def process(update: Update, context: CallbackContext) -> None:
     # context.bot.send_document('download/'+update.message.document.file_name,update.message.document.file_name)
     update.message.reply_text('was send');
 def handleGetItemOffer(update: Update, context: CallbackContext) -> None:
-    result  = getItemOffer(ZERO_ADDRESS, context.args[0], context.args[1])
+    result  = getItemOffer(os.getenv('EPIC_NFT_CONTRACT_ADDRESS'), context.args[0], context.args[1])
     update.message.reply_text(result)
 
 def handleGetMarketplaceDetail(update: Update, context: CallbackContext) -> None:
@@ -28,7 +27,15 @@ def handleGetMarketplaceDetail(update: Update, context: CallbackContext) -> None
 def handleGetOwnerOfNFT(update: Update, context: CallbackContext) -> None:
     result = getOwnerOfNFT(context.args[0])
     update.message.reply_text(result)
-
+def handleHelp(update: Update, context: CallbackContext) -> None:
+    
+    # <b>/offer:</b><code>&lt;token_id&gt; &lt;buyer&gt;: get item offer</code>\n
+    # <b>/market:</b><code>&lt;token_id&gt;: get marketplace detail</code>\n
+    # <b>/owner:</b><pre>&lt;token_id&gt; &lt;buyer&gt;: get owner</pre>\n
+    
+    update.message.reply_text(
+  '''/offer <tokenId> <buyer> - Get item offer \n/market <tokenId> - Get marketplace detail \n/owner <tokenId> - Get owner \n'''
+    )
 def main() -> None: 
     print('TELEBOT STARTED')
     updater = Updater(os.getenv('TELE_TOKEN'))
@@ -37,6 +44,7 @@ def main() -> None:
     dispatcher = updater.dispatcher
 
     dispatcher.add_handler(MessageHandler(Filters.attachment, process))
+    dispatcher.add_handler(CommandHandler("help",handleHelp))
     dispatcher.add_handler(CommandHandler("offer",handleGetItemOffer))
     dispatcher.add_handler(CommandHandler("market",handleGetMarketplaceDetail))
     dispatcher.add_handler(CommandHandler("owner",handleGetOwnerOfNFT))
