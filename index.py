@@ -1,9 +1,11 @@
 from email import message
 import logging
 from telegram import Update, File
-from telegram.ext import Updater, MessageHandler, CallbackContext, Filters
+from telegram.ext import Updater, MessageHandler, CallbackContext, Filters, CommandHandler
 from dotenv import load_dotenv
 import os
+from service import getItemOffer, getMarketplaceItemDetail, getOwnerOfNFT
+ZERO_ADDRESS = "0x0000000000000000000000000000000000000000"
 config = load_dotenv()
 
 logger = logging.getLogger(__name__)
@@ -15,7 +17,17 @@ def process(update: Update, context: CallbackContext) -> None:
     
     # context.bot.send_document('download/'+update.message.document.file_name,update.message.document.file_name)
     update.message.reply_text('was send');
+def handleGetItemOffer(update: Update, context: CallbackContext) -> None:
+    result  = getItemOffer(ZERO_ADDRESS, context.args[0], context.args[1])
+    update.message.reply_text(result)
 
+def handleGetMarketplaceDetail(update: Update, context: CallbackContext) -> None:
+    result = getMarketplaceItemDetail(context.args[0])
+    update.message.reply_text(result)
+
+def handleGetOwnerOfNFT(update: Update, context: CallbackContext) -> None:
+    result = getOwnerOfNFT(context.args[0])
+    update.message.reply_text(result)
 
 def main() -> None: 
     print('TELEBOT STARTED')
@@ -25,7 +37,9 @@ def main() -> None:
     dispatcher = updater.dispatcher
 
     dispatcher.add_handler(MessageHandler(Filters.attachment, process))
-
+    dispatcher.add_handler(CommandHandler("offer",handleGetItemOffer))
+    dispatcher.add_handler(CommandHandler("market",handleGetMarketplaceDetail))
+    dispatcher.add_handler(CommandHandler("owner",handleGetOwnerOfNFT))
     # Start the Bot
     updater.start_polling()
 
