@@ -49,7 +49,7 @@ def handleHelp(update: Update, context: CallbackContext) -> None:
     # <b>/owner:</b><pre>&lt;token_id&gt; &lt;buyer&gt;: get owner</pre>\n
     
     update.message.reply_text(
-  '''/offer <tokenId> <buyer> - Get item offer \n/market <tokenId> - Get marketplace detail \n/owner <tokenId> - Get owner \n/tokengame <address> - Get token of game\n/nftgame <tokenId> - Get nft of game\n/event <contract_name> <event_name> <start_block> <end_block> - Get event of contract, contract_name = {game, marketplace, box, nft}\n/eventbytx <contract_name> <event_name> <tx_hash> - Get event of contract, contract_name = {game, marketplace, box, nft}\n'''
+  '''contract_name = {game, marketplace, box, nft}\n/offer <tokenId> <buyer> - Get item offer \n/market <tokenId> - Get marketplace detail \n/owner <tokenId> - Get owner \n/tokengame <address> - Get token of game\n/nftgame <tokenId> - Get nft of game\n/event <contract_name> <event_name> <start_block> <end_block> - Get events of contract\n/eventbytx <contract_name> <event_name> <tx_hash> - Get event of contract by tx hash\n'''
     )
 def main() -> None: 
     print('TELEBOT STARTED')
