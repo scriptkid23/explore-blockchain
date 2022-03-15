@@ -4,7 +4,7 @@ from telegram import ParseMode, Update, File
 from telegram.ext import Updater, MessageHandler, CallbackContext, Filters, CommandHandler
 from dotenv import load_dotenv
 import os
-from service import getItemOffer, getMarketplaceItemDetail, getOwnerOfNFT, getNFTGameInfo, getTokenGameInfo
+from service import getEvent, getEventByTx, getItemOffer, getMarketplaceItemDetail, getOwnerOfNFT, getNFTGameInfo, getTokenGameInfo
 config = load_dotenv()
 
 logger = logging.getLogger(__name__)
@@ -36,6 +36,12 @@ def handleGetNFTGameInfo(update: Update, context: CallbackContext) -> None:
     result = getNFTGameInfo(context.args[0])
     update.message.reply_text(result)
 
+def handleGetEvent(update:Update, context: CallbackContext) -> None:
+    getEvent(update,context.args[0], context.args[1], int(context.args[2]), int(context.args[3]));
+
+def handleGetEventByTx(update:Update, context: CallbackContext) -> None:
+    getEventByTx(update, context.args[0], context.args[1], context.args[2])
+
 def handleHelp(update: Update, context: CallbackContext) -> None:
     
     # <b>/offer:</b><code>&lt;token_id&gt; &lt;buyer&gt;: get item offer</code>\n
@@ -43,7 +49,7 @@ def handleHelp(update: Update, context: CallbackContext) -> None:
     # <b>/owner:</b><pre>&lt;token_id&gt; &lt;buyer&gt;: get owner</pre>\n
     
     update.message.reply_text(
-  '''/offer <tokenId> <buyer> - Get item offer \n/market <tokenId> - Get marketplace detail \n/owner <tokenId> - Get owner \n/tokengame <address> - Get token of game\n/nftgame <tokenId> - Get nft of game\n'''
+  '''/offer <tokenId> <buyer> - Get item offer \n/market <tokenId> - Get marketplace detail \n/owner <tokenId> - Get owner \n/tokengame <address> - Get token of game\n/nftgame <tokenId> - Get nft of game\n/event <contract_name> <event_name> <start_block> <end_block> - Get event of contract, contract_name = {game, marketplace, box, nft}\n/eventbytx <contract_name> <event_name> <tx_hash> - Get event of contract, contract_name = {game, marketplace, box, nft}\n'''
     )
 def main() -> None: 
     print('TELEBOT STARTED')
@@ -59,6 +65,9 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("owner",handleGetOwnerOfNFT))
     dispatcher.add_handler(CommandHandler("tokengame",handleGetTokenGameInfo))
     dispatcher.add_handler(CommandHandler("nftgame",handleGetNFTGameInfo))
+    dispatcher.add_handler(CommandHandler("event",handleGetEvent))
+    dispatcher.add_handler(CommandHandler("eventbytx",handleGetEventByTx))
+   
     # Start the Bot
     updater.start_polling()
 

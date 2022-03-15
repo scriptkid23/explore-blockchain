@@ -1,11 +1,14 @@
 from ast import Dict
 import string
+from textwrap import indent
+from telegram import Update
 from web3 import Web3
 from web3.middleware import geth_poa_middleware
 from dotenv import load_dotenv
 import os
 import requests
 import json
+import constants
 load_dotenv()
 
 abi_nft = open("./abi/EpicWarNFT.json", 'r').read()
@@ -81,3 +84,46 @@ def getTokenGameInfo(address):
         return game_contract.functions.TokenInfo(address).call()
     except:
         return {}
+
+# /event <contract_name> <event_name> <start_block> <end_block>
+def getEventByTx(update:Update, contract, event, tx_hash):
+    contractSwitcher = {
+        "game" : game_contract,
+        "marketplace": marketplace_contract,
+        "nft": nft_contract,
+        "box":box_contract
+    }   
+    print(contract,event,tx_hash)
+    try:
+        update.message.reply_text("Processing...🥴")
+        txr = w3.eth.get_transaction_receipt(tx_hash)
+        receipt = contractSwitcher.get(contract,game_contract).events[event]().processReceipt(txr)
+        update.message.reply_text(json.dumps(json.loads(w3.toJSON(receipt)),indent=4,sort_keys=True))
+        update.message.reply_text("end.😪")
+    except Exception as e:
+        update.message.reply_text(str(e) +" "+"😵")
+        
+def getEvent(update: Update, contract, event, start_block:int, end_block:int):
+    contractSwitcher = {
+        "game" : game_contract,
+        "marketplace": marketplace_contract,
+        "nft": nft_contract,
+        "box":box_contract
+    }
+    try:
+        update.message.reply_text("Crawling...🥴")
+        while start_block < end_block:
+            if(end_block - start_block < 5000):
+                event_filter = contractSwitcher.get(contract,game_contract).events[event].createFilter(fromBlock=start_block, toBlock=end_block)
+            else:
+                event_filter = contractSwitcher.get(contract,game_contract).events[event].createFilter(fromBlock=start_block, toBlock=start_block + 4999)
+            temp  = json.loads(Web3.toJSON(event_filter.get_all_entries()))
+            if(len(temp) != 0):
+                update.message.reply_text(json.dumps(temp, indent=4,sort_keys=True))
+            
+            start_block = start_block + 5000
+        update.message.reply_text("end.😪")
+    except Exception as e:
+        update.message.reply_text(str(e) +" "+"😵")
+
+
