@@ -43,12 +43,12 @@ def handleGetEventByTx(update:Update, context: CallbackContext) -> None:
     getEventByTx(update, context.args[0], context.args[1], context.args[2])
 
 def handleHelp(update: Update, context: CallbackContext) -> None:
-    
-    # <b>/offer:</b><code>&lt;token_id&gt; &lt;buyer&gt;: get item offer</code>\n
-    # <b>/market:</b><code>&lt;token_id&gt;: get marketplace detail</code>\n
-    # <b>/owner:</b><pre>&lt;token_id&gt; &lt;buyer&gt;: get owner</pre>\n
-    
+     
     update.message.reply_text(
+  '''contract_name = {game, marketplace, box, nft}\n/offer <tokenId> <buyer> - Get item offer \n/market <tokenId> - Get marketplace detail \n/owner <tokenId> - Get owner \n/tokengame <address> - Get token of game\n/nftgame <tokenId> - Get nft of game\n/event <contract_name> <event_name> <start_block> <end_block> - Get events of contract\n/eventbytx <contract_name> <event_name> <tx_hash> - Get event of contract by tx hash\n'''
+    )
+def handleStart(update: Update, context: CallbackContext) -> None:
+     update.message.reply_text(
   '''contract_name = {game, marketplace, box, nft}\n/offer <tokenId> <buyer> - Get item offer \n/market <tokenId> - Get marketplace detail \n/owner <tokenId> - Get owner \n/tokengame <address> - Get token of game\n/nftgame <tokenId> - Get nft of game\n/event <contract_name> <event_name> <start_block> <end_block> - Get events of contract\n/eventbytx <contract_name> <event_name> <tx_hash> - Get event of contract by tx hash\n'''
     )
 def main() -> None: 
@@ -57,8 +57,8 @@ def main() -> None:
 
        # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
-
     dispatcher.add_handler(MessageHandler(Filters.attachment, process))
+    dispatcher.add_handler(CommandHandler("start",handleStart))
     dispatcher.add_handler(CommandHandler("help",handleHelp))
     dispatcher.add_handler(CommandHandler("offer",handleGetItemOffer))
     dispatcher.add_handler(CommandHandler("market",handleGetMarketplaceDetail))
