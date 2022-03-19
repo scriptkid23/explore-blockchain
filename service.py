@@ -1,4 +1,5 @@
 from ast import Dict
+from re import sub
 import string
 from textwrap import indent
 from telegram import Update
@@ -6,6 +7,7 @@ from web3 import Web3
 from web3.middleware import geth_poa_middleware
 from dotenv import load_dotenv
 import os
+import subprocess
 import requests
 import json
 import constants
@@ -126,4 +128,14 @@ def getEvent(update: Update, contract, event, start_block:int, end_block:int):
     except Exception as e:
         update.message.reply_text(str(e) +" "+"😵")
 
-
+def deployMarketplace(update: Update):
+    try:
+        update.message.reply_text("Processing...🥴")
+        response = subprocess.Popen("./deploy.sh")
+        if response.wait()!= 0:
+            output, error = response.communicate()
+            update.message.reply_text(error)
+        
+        update.message.reply_text("Done.")
+    except Exception as e:
+        update.message.reply_text(str(e) +" "+"😵")

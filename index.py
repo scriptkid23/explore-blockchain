@@ -4,7 +4,7 @@ from telegram import ParseMode, Update, File
 from telegram.ext import Updater, MessageHandler, CallbackContext, Filters, CommandHandler
 from dotenv import load_dotenv
 import os
-from service import getEvent, getEventByTx, getItemOffer, getMarketplaceItemDetail, getOwnerOfNFT, getNFTGameInfo, getTokenGameInfo
+from service import getEvent, getEventByTx, getItemOffer, getMarketplaceItemDetail, getOwnerOfNFT, getNFTGameInfo, getTokenGameInfo, deployMarketplace
 config = load_dotenv()
 
 logger = logging.getLogger(__name__)
@@ -42,6 +42,10 @@ def handleGetEvent(update:Update, context: CallbackContext) -> None:
 def handleGetEventByTx(update:Update, context: CallbackContext) -> None:
     getEventByTx(update, context.args[0], context.args[1], context.args[2])
 
+def handleDeployMarketplace(update:Update, context: CallbackContext) -> None:
+    if(context.args[0] == "marketplace"):
+        deployMarketplace(update=update)
+
 def handleHelp(update: Update, context: CallbackContext) -> None:
      
     update.message.reply_text(
@@ -67,6 +71,7 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("nftgame",handleGetNFTGameInfo))
     dispatcher.add_handler(CommandHandler("event",handleGetEvent))
     dispatcher.add_handler(CommandHandler("eventbytx",handleGetEventByTx))
+    dispatcher.add_handler(CommandHandler("deploy",handleDeployMarketplace))
    
     # Start the Bot
     updater.start_polling()
