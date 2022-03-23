@@ -22,10 +22,10 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "internalType": "uint256",
+        "indexed": false,
+        "internalType": "string",
         "name": "transactionId",
-        "type": "uint256"
+        "type": "string"
       },
       {
         "indexed": false,
@@ -166,10 +166,10 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "internalType": "uint256",
+        "indexed": false,
+        "internalType": "string",
         "name": "transactionId",
-        "type": "uint256"
+        "type": "string"
       },
       {
         "indexed": false,
@@ -431,9 +431,9 @@
         "type": "uint256[]"
       },
       {
-        "internalType": "uint256",
+        "internalType": "string",
         "name": "transactionId",
-        "type": "uint256"
+        "type": "string"
       },
       {
         "components": [
@@ -598,9 +598,9 @@
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
+        "internalType": "string",
         "name": "transactionId",
-        "type": "uint256"
+        "type": "string"
       },
       {
         "components": [
