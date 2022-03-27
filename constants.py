@@ -25,3 +25,4 @@ CONTRACT = {
         "Recovered":17,
     }
 }
+TAG_NAME = "@hoando2k6"

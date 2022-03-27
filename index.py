@@ -4,6 +4,7 @@ from telegram import ParseMode, Update, File
 from telegram.ext import Updater, MessageHandler, CallbackContext, Filters, CommandHandler
 from dotenv import load_dotenv
 import os
+from julie import handleText
 from service import getEvent, getEventByTx, getItemOffer, getMarketplaceItemDetail, getOwnerOfNFT, getNFTGameInfo, getTokenGameInfo, deployMarketplace
 config = load_dotenv()
 
@@ -55,12 +56,15 @@ def handleStart(update: Update, context: CallbackContext) -> None:
      update.message.reply_text(
   '''contract_name = {game, marketplace, box, nft}\n/offer <tokenId> <buyer> - Get item offer \n/market <tokenId> - Get marketplace detail \n/owner <tokenId> - Get owner \n/tokengame <address> - Get token of game\n/nftgame <tokenId> - Get nft of game\n/event <contract_name> <event_name> <start_block> <end_block> - Get events of contract\n/eventbytx <contract_name> <event_name> <tx_hash> - Get event of contract by tx hash\n'''
     )
+def handleResponseText(update: Update, context: CallbackContext) -> None:
+    handleText(update.message.text, update=update, context=context)
 def main() -> None: 
     print('TELEBOT STARTED')
     updater = Updater(os.getenv('TELE_TOKEN'))
 
        # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
+    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, handleResponseText))
     dispatcher.add_handler(MessageHandler(Filters.attachment, process))
     dispatcher.add_handler(CommandHandler("start",handleStart))
     dispatcher.add_handler(CommandHandler("help",handleHelp))
