@@ -9,7 +9,7 @@ from service import getEvent, getEventByTx, getItemOffer, getMarketplaceItemDeta
 config = load_dotenv()
 
 logger = logging.getLogger(__name__)
-
+PORT = int(os.environ.get('PORT', '8443'))
 
 def process(update: Update, context: CallbackContext) -> None:
     with open('download/'+update.message.document.file_name, 'wb') as f:
@@ -58,10 +58,15 @@ def handleStart(update: Update, context: CallbackContext) -> None:
     )
 def handleResponseText(update: Update, context: CallbackContext) -> None:
     handleText(update.message.text, update=update, context=context)
+
+def error(update, context):
+    """Logs Errors caused by Updates."""
+    logger.warning('Update "%s" caused error "%s"', update, context.error)
+
 def main() -> None: 
     print('TELEBOT STARTED')
     updater = Updater(os.getenv('TELE_TOKEN'))
-
+    APP_NAME = 'https://juliebot-v1.herokuapp.com/'
        # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, handleResponseText))
@@ -78,11 +83,12 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("deploy",handleDeployMarketplace))
    
     # Start the Bot
-    updater.start_polling()
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
     # start_polling() is non-blocking and will stop the bot gracefully.
+    dispatcher.add_error_handler(error)
+    updater.start_webhook(listen="0.0.0.0", port=PORT, url_path=os.getenv('TELE_TOKEN'), webhook_url=APP_NAME + os.getenv('TELE_TOKEN'))
     updater.idle()
 if __name__ == '__main__':
     main()
