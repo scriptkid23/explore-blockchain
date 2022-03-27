@@ -60,7 +60,10 @@ def handleResponseText(update: Update, context:CallbackContext) -> None:
     handleText(update.message.text, update=update)
 def handleGetZeroAddress(update: Update, context: CallbackContext) -> None:
     getZeroAddress(update)    
-
+def error(update, context):
+    """Logs Errors caused by Updates."""
+    logger.warning('Update "%s" caused error "%s"', update, context.error)
+    
 def main() -> None: 
     print('TELEBOT STARTED')
     updater = Updater(os.getenv('TELE_TOKEN'))
