@@ -26,3 +26,4 @@ CONTRACT = {
     }
 }
 TAG_NAME = "@hoando2k6"
+QUESTION = ["là gì?", "ở đâu?", "là ai?",'o dau?', "la gi?", "không?"]

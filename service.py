@@ -2,7 +2,7 @@ from ast import Dict
 from re import sub
 import string
 from textwrap import indent
-from telegram import Update
+from telegram import ParseMode, Update
 from web3 import Web3
 from web3.middleware import geth_poa_middleware
 from dotenv import load_dotenv
@@ -139,3 +139,9 @@ def deployMarketplace(update: Update):
         update.message.reply_text("Done.")
     except Exception as e:
         update.message.reply_text(str(e) +" "+"😵")
+
+def getZeroAddress(update: Update):
+    try:
+        update.message.reply_text("`0x0000000000000000000000000000000000000000`",parse_mode=ParseMode.MARKDOWN)
+    except:
+         update.message.reply_text("😵")    
