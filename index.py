@@ -84,5 +84,10 @@ def main() -> None:
     # SIGTERM or SIGABRT. This should be used most of the time, since
     # start_polling() is non-blocking and will stop the bot gracefully.
     updater.idle()
+    updater.start_webhook(listen="0.0.0.0",
+                      port=int(os.environ.get('PORT', 5000)),
+                      url_path=os.getenv('TELE_TOKEN'),
+                      webhook_url='https://juliebot-v1.herokuapp.com/' + os.getenv('TELE_TOKEN')
+                      )
 if __name__ == '__main__':
     main()
