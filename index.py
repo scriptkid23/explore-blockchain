@@ -5,7 +5,7 @@ from telegram.ext import Updater, MessageHandler, CallbackContext, Filters, Comm
 from dotenv import load_dotenv
 import os
 from julie import handleText
-from service import getEvent, getEventByTx, getItemOffer, getMarketplaceItemDetail, getOwnerOfNFT, getNFTGameInfo, getTokenGameInfo, deployMarketplace
+from service import getEvent, getEventByTx, getItemOffer, getMarketplaceItemDetail, getOwnerOfNFT, getNFTGameInfo, getTokenGameInfo, deployMarketplace, getZeroAddress
 config = load_dotenv()
 
 logger = logging.getLogger(__name__)
@@ -56,8 +56,11 @@ def handleStart(update: Update, context: CallbackContext) -> None:
      update.message.reply_text(
   '''contract_name = {game, marketplace, box, nft}\n/offer <tokenId> <buyer> - Get item offer \n/market <tokenId> - Get marketplace detail \n/owner <tokenId> - Get owner \n/tokengame <address> - Get token of game\n/nftgame <tokenId> - Get nft of game\n/event <contract_name> <event_name> <start_block> <end_block> - Get events of contract\n/eventbytx <contract_name> <event_name> <tx_hash> - Get event of contract by tx hash\n'''
     )
-def handleResponseText(update: Update, context: CallbackContext) -> None:
-    handleText(update.message.text, update=update, context=context)
+def handleResponseText(update: Update, context:CallbackContext) -> None:
+    handleText(update.message.text, update=update)
+def handleGetZeroAddress(update: Update, context: CallbackContext) -> None:
+    getZeroAddress(update)    
+
 def main() -> None: 
     print('TELEBOT STARTED')
     updater = Updater(os.getenv('TELE_TOKEN'))
@@ -76,6 +79,7 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("event",handleGetEvent))
     dispatcher.add_handler(CommandHandler("eventbytx",handleGetEventByTx))
     dispatcher.add_handler(CommandHandler("deploy",handleDeployMarketplace))
+    dispatcher.add_handler(CommandHandler("zero",handleGetZeroAddress))
    
     # Start the Bot
     updater.start_polling()
