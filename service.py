@@ -25,7 +25,7 @@ token_contract_address = Web3.toChecksumAddress(os.getenv('EPIC_TOKEN_CONTRACT_A
 marketplace_contract_address = Web3.toChecksumAddress(os.getenv('MARKETPLACE_CONTRACT_ADDRESS'))
 game_contract_address = Web3.toChecksumAddress(os.getenv('EPIC_GAME_CONTRACT_ADDRESS'))
 
-w3 = Web3(Web3.HTTPProvider(os.getenv('BSC_RPC_URL')))
+w3 = Web3(Web3.HTTPProvider(os.getenv('RPC_URL')))
 w3.middleware_onion.inject(geth_poa_middleware, layer=0)
 
 box_contract = w3.eth.contract(box_contract_address, abi=abi_box)
