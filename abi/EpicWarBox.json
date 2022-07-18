@@ -66,9 +66,9 @@
       },
       {
         "indexed": false,
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "eventId",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
         "indexed": false,
@@ -133,9 +133,9 @@
       },
       {
         "indexed": false,
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "eventId",
-        "type": "uint256"
+        "type": "uint16"
       }
     ],
     "name": "BoxOpened",
@@ -146,9 +146,9 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "totalSupply",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
         "indexed": false,
@@ -176,9 +176,9 @@
       },
       {
         "indexed": false,
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "maxBuy",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
         "indexed": false,
@@ -278,11 +278,6 @@
       },
       {
         "internalType": "address",
-        "name": "_signer",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
         "name": "_fundWallet",
         "type": "address"
       },
@@ -300,14 +295,14 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_eventID",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
-        "internalType": "uint256[]",
+        "internalType": "uint16[]",
         "name": "_quantity",
-        "type": "uint256[]"
+        "type": "uint16[]"
       },
       {
         "internalType": "string[]",
@@ -321,6 +316,24 @@
       }
     ],
     "name": "addBox",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "_eventID",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint16[]",
+        "name": "_boxIDList",
+        "type": "uint16[]"
+      }
+    ],
+    "name": "addBoxID",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -386,9 +399,9 @@
     "name": "boxByEvent",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "",
-        "type": "uint256"
+        "type": "uint16"
       }
     ],
     "stateMutability": "view",
@@ -397,27 +410,27 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "",
-        "type": "uint256"
+        "type": "uint16"
       }
     ],
     "name": "boxesByEvent",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "quantity",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "bought",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
         "internalType": "string",
@@ -436,19 +449,19 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_eventID",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_amount",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_indexBoxList",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
         "internalType": "address",
@@ -464,9 +477,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_eventID",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
         "internalType": "string",
@@ -474,9 +487,9 @@
         "type": "string"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_totalSupply",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
         "internalType": "uint256",
@@ -499,9 +512,9 @@
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_maxBuy",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
         "internalType": "uint256",
@@ -522,9 +535,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_eventID",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
         "internalType": "uint256",
@@ -545,17 +558,17 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "",
-        "type": "uint256"
+        "type": "uint16"
       }
     ],
     "name": "eventByID",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "totalSupply",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
         "internalType": "uint256",
@@ -578,9 +591,9 @@
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "maxBuy",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
         "internalType": "uint256",
@@ -603,9 +616,9 @@
         "type": "string"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "boxCount",
-        "type": "uint256"
+        "type": "uint16"
       }
     ],
     "stateMutability": "view",
@@ -659,6 +672,25 @@
   {
     "inputs": [
       {
+        "internalType": "uint16",
+        "name": "_eventID",
+        "type": "uint16"
+      }
+    ],
+    "name": "getBoxID",
+    "outputs": [
+      {
+        "internalType": "uint16[]",
+        "name": "",
+        "type": "uint16[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "owner",
         "type": "address"
@@ -678,6 +710,29 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "_eventID",
+        "type": "uint16"
+      },
+      {
+        "internalType": "address[]",
+        "name": "_adds",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint16",
+        "name": "_indexBoxList",
+        "type": "uint16"
+      }
+    ],
+    "name": "mintBox",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -742,9 +797,9 @@
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_eventID",
-        "type": "uint256"
+        "type": "uint16"
       }
     ],
     "name": "openBox",
@@ -800,9 +855,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "",
-        "type": "uint256"
+        "type": "uint16"
       }
     ],
     "name": "randomNumber",
@@ -826,9 +881,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_eventID",
-        "type": "uint256"
+        "type": "uint16"
       }
     ],
     "name": "requestRandomNumber",
@@ -922,7 +977,7 @@
     "inputs": [
       {
         "internalType": "string",
-        "name": "baseURI",
+        "name": "_uri",
         "type": "string"
       }
     ],
@@ -960,9 +1015,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_eventID",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
         "internalType": "uint256",
@@ -986,19 +1041,6 @@
     "name": "setVRFContract",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "signer",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1147,14 +1189,14 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_eventID",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_count",
-        "type": "uint256"
+        "type": "uint16"
       }
     ],
     "name": "updateBoxEventCount",
@@ -1165,9 +1207,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_eventID",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
         "internalType": "uint256",
@@ -1188,9 +1230,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_eventID",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
         "internalType": "uint256",
@@ -1211,14 +1253,14 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_eventID",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_totalSupply",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
         "internalType": "uint256",
@@ -1226,9 +1268,9 @@
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_maxBuy",
-        "type": "uint256"
+        "type": "uint16"
       }
     ],
     "name": "updateEventTotalSupplyInfo",
@@ -1239,9 +1281,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_eventID",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
         "internalType": "uint256",
@@ -1275,9 +1317,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
         "internalType": "address",
@@ -1288,9 +1330,9 @@
     "name": "userBought",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "",
-        "type": "uint256"
+        "type": "uint16"
       }
     ],
     "stateMutability": "view",
