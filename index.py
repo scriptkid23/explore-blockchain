@@ -67,7 +67,8 @@ def error(update, context):
 def main() -> None: 
     print('TELEBOT STARTED')
     updater = Updater(os.getenv('TELE_TOKEN'))
-    APP_NAME = 'https://juliebot-v1.herokuapp.com/'
+    # APP_NAME = 'https://juliebot-v1.herokuapp.com/' 
+    APP_NAME = os.getenv('HEROKU_URL')
        # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, handleResponseText))
